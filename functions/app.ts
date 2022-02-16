@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, FastifyServerOptions } from 'fastify'
 import wordnet from 'wordnet'
+import parser from 'accept-language-parser'
 
 interface Word {
     Params: {
@@ -20,7 +21,7 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
         await wordnet.lookup(name).then((definitions: any) => res.status(200).send({ glossary: definitions[0].glossary })).catch((_: unknown) => res.status(200).send({ glossary: 'No definition found' }))
     })
 
-    instance.get('/word/today', async (_req: FastifyRequest, res: FastifyReply) => {
+    instance.get('/word/today', async (req: FastifyRequest, res: FastifyReply) => {
         const wordList = await worldList()
         const todayWord = Math.floor(Math.random() * wordList.length)
 
@@ -28,7 +29,13 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
         const date = new Date(now.setDate(now.getDate() + 1))
         date.setHours(0, 0, 0, 0)
 
-        res.setCookie('dictry', wordList[todayWord], { expires: date }).send(null)
+        const lang = parser.parse(req.headers['accept-language'])
+
+        if (lang == null) return res.status(200).send({ error: 'No language found' })
+
+        const intl = new Intl.DateTimeFormat(lang[0].code, {year: "numeric", month: "2-digit", day: "2-digit"}).format(date)
+
+        res.setCookie('dictry', wordList[todayWord], { expires: new Date(intl) }).send(null)
     })
 
     done()
