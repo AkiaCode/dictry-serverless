@@ -14,6 +14,7 @@
     "dependencies": {
         "dotenv": "^10.0.0",
         "fastify": "^3.18.1",
+        "fastify-cookie": "^5.5.0",
         "wordnet": "^2.0.0"
     }
 }
