@@ -24,11 +24,12 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
         const wordList = await worldList()
         const todayWord = Math.floor(Math.random() * wordList.length)
 
-        const date = new Date(new Date().setDate(new Date().getDate() + 1))
+        const now = new Date()
+        const date = new Date(now.setDate(now.getDate() + 1))
         date.setHours(0, 0, 0, 0)
 
         res.setCookie('dictry', wordList[todayWord], { expires: date }).send(null)
     })
-    
+
     done()
 }
