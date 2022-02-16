@@ -1,0 +1,19 @@
+{
+    "name": "dictry-serverless",
+    "version": "1.0.0",
+    "description": "",
+    "main": "api/serverless.js",
+    "scripts": {
+        "vercel": "vercel dev"
+    },
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@vercel/node": "^1.11.1"
+    },
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "fastify": "^3.18.1",
+        "wordnet": "^2.0.0"
+    }
+}
