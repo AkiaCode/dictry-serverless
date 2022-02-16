@@ -1,6 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, FastifyServerOptions } from 'fastify'
 import wordnet from 'wordnet'
-import parser from 'accept-language-parser'
 
 interface Word {
     Params: {
@@ -29,13 +28,7 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
         const date = new Date(now.setDate(now.getDate() + 1))
         date.setHours(0, 0, 0, 0)
 
-        const lang = parser.parse(req.headers['accept-language'])
-
-        if (lang == null) return res.status(200).send({ error: 'No language found' })
-
-        const intl = new Intl.DateTimeFormat(lang[0].code, {year: "numeric", month: "2-digit", day: "2-digit"}).format(date)
-
-        res.setCookie('dictry', wordList[todayWord], { expires: new Date(intl) }).send(null)
+        res.setCookie('dictry', wordList[todayWord], { expires: date }).send(null)
     })
 
     done()

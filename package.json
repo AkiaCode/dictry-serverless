@@ -12,8 +12,6 @@
         "@vercel/node": "^1.11.1"
     },
     "dependencies": {
-        "accept-language-parser": "^1.5.0",
-        "dotenv": "^10.0.0",
         "fastify": "^3.18.1",
         "fastify-cookie": "^5.5.0",
         "wordnet": "^2.0.0"

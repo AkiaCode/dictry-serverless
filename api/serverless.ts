@@ -1,11 +1,8 @@
 "use strict";
 
-import * as dotenv from "dotenv";
 import fastify from "fastify";
 import { FastifyCookieOptions } from "fastify-cookie";
 import wordnet from "wordnet";
-
-dotenv.config();
 
 const app = fastify({
   logger: true,
