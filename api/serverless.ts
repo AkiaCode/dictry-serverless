@@ -17,7 +17,7 @@ app.register(require('fastify-cookie'), {
 } as FastifyCookieOptions)
 
 app.register(import("../functions/app"), {
-    prefix: '/'
+    prefix: '/api/v1'
 });
 
 export default async (req, res) => {
