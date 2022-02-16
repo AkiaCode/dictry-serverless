@@ -12,23 +12,12 @@ const worldList = async (): Promise<string[]> => await wordnet.list().filter(wor
 export default async function (instance: FastifyInstance, _opts: FastifyServerOptions, done) {
 
     instance.get('/words', async (_req: FastifyRequest, res: FastifyReply) => {
-        res.status(200).send({ wordList: await worldList() })
+        res.status(200).send({ wordList: await worldList() }).setCookie('dictry', 'serverless', { maxAge: 8000000 })
     })
 
     instance.get('/words/:name', async (req: FastifyRequest<Word>, res: FastifyReply) => {
         const { name } = req.params
         await wordnet.lookup(name).then((definitions: any) => res.status(200).send({ glossary: definitions[0].glossary })).catch((_: unknown) => res.status(200).send({ glossary: 'No definition found' }))
-    })
-
-    instance.get('/word/today', async (req: FastifyRequest, res: FastifyReply) => {
-        const wordList = await worldList()
-        const todayWord = Math.floor(Math.random() * wordList.length)
-
-        const now = new Date()
-        const date = new Date(now.setDate(now.getDate() + 1))
-        date.setHours(0, 0, 0, 0)
-
-        res.setCookie('dictry', wordList[todayWord], { expires: date }).send(null)
     })
 
     done()
