@@ -20,5 +20,8 @@ app.register(import("../functions/app"), {
 export default async (req, res) => {
     await wordnet.init('./node_modules/wordnet/db');
     await app.ready();
+    if (req.method === "OPTIONS") {
+      return res.status(200).end();
+    }
     app.server.emit('request', req, res);
 }
