@@ -21,7 +21,7 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
     })
 
     instance.get('/word/today', async (req: FastifyRequest, res: FastifyReply) => {
-        if (req.headers.date === undefined) return res.status(200).send({ error: 'No date header' })
+        if (req.headers.date === undefined) return res.status(404).send({ error: 'No date header' })
         const wordList = await worldList()
 
         // https://github.com/cwackerfuss/react-wordle/blob/main/src/lib/words.ts#L56~L60
