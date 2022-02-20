@@ -7,7 +7,7 @@ interface Word {
     }
 }
 
-const worldList = async (): Promise<string[]> => await wordnet.list().filter(word => !(word.includes('-') || word.includes('.') || new RegExp('([0-9])').exec(word) !== null))
+const worldList = async (): Promise<string[]> => await wordnet.list().filter(word => !(word.includes('-') || word.includes('.') || new RegExp('([0-9])').exec(word) !== null || word.length > 5))
 
 export default async function (instance: FastifyInstance, _opts: FastifyServerOptions, done) {
 
