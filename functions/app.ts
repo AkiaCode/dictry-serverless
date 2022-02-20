@@ -31,7 +31,7 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
         const index = Math.floor((Number(now) - epochMs) / msInDay)
         const nextday = (index + 1) * msInDay + epochMs
 
-        res.status(200).send({ word: wordList[index % wordList.length], nextday: nextday })
+        wordnet.lookup(wordList[index % wordList.length]).then((definitions: any) => res.status(200).send({ word: wordList[index % wordList.length], glossary: definitions[0].glossary, nextday: nextday })
     })
 
     done()
