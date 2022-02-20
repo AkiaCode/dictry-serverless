@@ -21,12 +21,12 @@ export default async function (instance: FastifyInstance, _opts: FastifyServerOp
     })
 
     instance.get('/word/today', async (req: FastifyRequest, res: FastifyReply) => {
-        if (req.headers.date === undefined) return res.status(404).send({ error: 'No date header' })
+        if (req.headers.dictry === undefined) return res.status(404).send({ error: 'No date header' })
         const wordList = await worldList()
 
         // https://github.com/cwackerfuss/react-wordle/blob/main/src/lib/words.ts#L56~L60
         const epochMs = new Date('January 1, 2022 00:00:00').valueOf()
-        const now = req.headers.date
+        const now = req.headers.dictry
         const msInDay = 86400000
         const index = Math.floor((Number(now) - epochMs) / msInDay)
         const nextday = (index + 1) * msInDay + epochMs
